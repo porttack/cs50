@@ -1,0 +1,11 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !include palindromes.py
+    - !require palindromes.py
+
+check50:
+  files:
+    - !exclude "*"
+    - !include palindromes.py
+  checks: __init__.py
