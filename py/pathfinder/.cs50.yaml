@@ -1,0 +1,11 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !include pathfinder.py
+    - !require pathfinder.py
+
+check50:
+  files:
+    - !exclude "*"
+    - !include pathfinder.py
+  checks: __init__.py
