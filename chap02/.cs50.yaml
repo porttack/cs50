@@ -1,12 +1,12 @@
 submit50:
   files: &submit50_files
     - !exclude "*"
-    - !include chap02-homework.md
-    - !include chap02-homework.ipynb
-    - !require chap02-homework.md
+    - !include homework/chap02-homework.md
+    - !include homework/chap02-homework.ipynb
+    - !require homework/chap02-homework.md
 
 check50:
   files:
     - !exclude "*"
-    - !include chap02-homework.md
+    - !include homework/chap02-homework.md
   checks: __init__.py
