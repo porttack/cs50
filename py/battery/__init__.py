@@ -81,6 +81,15 @@ def reprompts_on_implausibly_high_reading():
         .exit(0)
 
 @check50.check(exists)
+def reprompts_on_raw_ratio_over_120_even_if_rounded_percent_is_not():
+    """reprompts on a raw reading over 120%, even when it would round down to a valid-looking 120%"""
+    check50.run("python3 battery.py") \
+        .stdin("1.8045/1.5") \
+        .stdin("1.35/1.5") \
+        .stdout(r"90%", "90%") \
+        .exit(0)
+
+@check50.check(exists)
 def reprompts_on_missing_slash():
     """reprompts when the input has no slash at all"""
     check50.run("python3 battery.py") \
