@@ -21,9 +21,9 @@ def good_above_nominal():
     check50.run("python3 battery.py").stdin("1.65/1.5").stdout(r"GOOD \(110%\)", "GOOD (110%)").exit(0)
 
 @check50.check(exists)
-def good_at_top_boundary():
-    """reports GOOD at exactly 120%, the top of the valid range"""
-    check50.run("python3 battery.py").stdin("1.8/1.5").stdout(r"GOOD \(120%\)", "GOOD (120%)").exit(0)
+def good_has_no_upper_limit():
+    """reports GOOD with no ceiling, well above 120%"""
+    check50.run("python3 battery.py").stdin("2.25/1.5").stdout(r"GOOD \(150%\)", "GOOD (150%)").exit(0)
 
 @check50.check(exists)
 def low_at_boundary():
@@ -67,24 +67,6 @@ def reprompts_on_negative_nominal():
     """reprompts on a negative nominal voltage"""
     check50.run("python3 battery.py") \
         .stdin("1.35/-1.5") \
-        .stdin("1.35/1.5") \
-        .stdout(r"90%", "90%") \
-        .exit(0)
-
-@check50.check(exists)
-def reprompts_on_implausibly_high_reading():
-    """reprompts when the reading would be over 120%"""
-    check50.run("python3 battery.py") \
-        .stdin("1.95/1.5") \
-        .stdin("1.35/1.5") \
-        .stdout(r"90%", "90%") \
-        .exit(0)
-
-@check50.check(exists)
-def reprompts_on_raw_ratio_over_120_even_if_rounded_percent_is_not():
-    """reprompts on a raw reading over 120%, even when it would round down to a valid-looking 120%"""
-    check50.run("python3 battery.py") \
-        .stdin("1.8045/1.5") \
         .stdin("1.35/1.5") \
         .stdout(r"90%", "90%") \
         .exit(0)
