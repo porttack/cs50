@@ -1,0 +1,9 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !include lineup.py
+    - !require lineup.py
+
+check50:
+  files: *submit50_files
+  checks: __init__.py
