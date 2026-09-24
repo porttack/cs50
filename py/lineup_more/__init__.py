@@ -2,13 +2,13 @@ import check50
 
 @check50.check()
 def exists():
-    """lineup_harder.py exists"""
-    check50.exists("lineup_harder.py")
+    """lineup_more.py exists"""
+    check50.exists("lineup_more.py")
 
 @check50.check(exists)
 def adds_and_plays_in_fifo_order():
     """plays songs in the order they were added"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("ADD Anti-Hero") \
         .stdin("ADD Flowers") \
         .stdin("PLAY") \
@@ -21,7 +21,7 @@ def adds_and_plays_in_fifo_order():
 @check50.check(exists)
 def play_on_empty_lineup():
     """PLAY on an empty lineup prints Nothing to play"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("PLAY") \
         .stdout(r"Nothing to play", "Nothing to play") \
         .stdin("DONE") \
@@ -30,7 +30,7 @@ def play_on_empty_lineup():
 @check50.check(exists)
 def lineup_rejects_a_sixth_song():
     """a 6th ADD is rejected once 5 songs are already waiting"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("ADD A") \
         .stdin("ADD B") \
         .stdin("ADD C") \
@@ -44,7 +44,7 @@ def lineup_rejects_a_sixth_song():
 @check50.check(exists)
 def back_on_empty_history():
     """BACK before anything has played says so"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("BACK") \
         .stdout(r"Nothing has played yet", "Nothing has played yet") \
         .stdin("DONE") \
@@ -53,7 +53,7 @@ def back_on_empty_history():
 @check50.check(exists)
 def back_reports_most_recent_first():
     """BACK is LIFO: it reports the most recently played song first"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("ADD Anti-Hero") \
         .stdin("ADD Flowers") \
         .stdin("PLAY") \
@@ -70,7 +70,7 @@ def back_reports_most_recent_first():
 @check50.check(exists)
 def back_does_not_requeue_the_song():
     """popping a song off history with BACK does not put it back in the lineup"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("ADD Anti-Hero") \
         .stdin("PLAY") \
         .stdin("BACK") \
@@ -82,7 +82,7 @@ def back_does_not_requeue_the_song():
 @check50.check(exists)
 def unrecognized_command_prints_huh():
     """a command that isn't ADD, PLAY, BACK, or DONE prints Huh?"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("SKIP") \
         .stdout(r"Huh\?", "Huh?") \
         .stdin("DONE") \
@@ -91,7 +91,7 @@ def unrecognized_command_prints_huh():
 @check50.check(exists)
 def lowercase_back_prints_huh():
     """commands are case-sensitive: lowercase back is not BACK"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("back") \
         .stdout(r"Huh\?", "Huh?") \
         .stdin("DONE") \
@@ -100,6 +100,6 @@ def lowercase_back_prints_huh():
 @check50.check(exists)
 def done_ends_the_program():
     """DONE ends the program cleanly"""
-    check50.run("python3 lineup_harder.py") \
+    check50.run("python3 lineup_more.py") \
         .stdin("DONE") \
         .exit(0)
