@@ -1,8 +1,8 @@
 submit50:
   files: &submit50_files
     - !exclude "*"
-    - !include encore.py
-    - !require encore.py
+    - !include lineup_harder.py
+    - !require lineup_harder.py
 
 check50:
   files: *submit50_files
