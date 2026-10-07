@@ -1,0 +1,11 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !include emojize.py
+    - !require emojize.py
+
+check50:
+  files:
+    - !exclude "*"
+    - !include emojize.py
+  checks: __init__.py
