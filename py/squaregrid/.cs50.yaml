@@ -1,0 +1,11 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !include square_grid.py
+    - !require square_grid.py
+
+check50:
+  files:
+    - !exclude "*"
+    - !include square_grid.py
+  checks: __init__.py
