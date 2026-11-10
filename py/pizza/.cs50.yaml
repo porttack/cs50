@@ -1,0 +1,11 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !include pizza.py
+    - !require pizza.py
+
+check50:
+  files:
+    - !exclude "*"
+    - !include pizza.py
+  checks: __init__.py

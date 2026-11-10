@@ -1,0 +1,111 @@
+import check50
+
+
+def table(path):
+    """the exact expected output for one of the bundled CSV files"""
+    with open(path) as f:
+        return f.read()
+
+
+REGULAR = """\
++-----------------+---------+---------+
+| Regular Pizza   | Small   | Large   |
++=================+=========+=========+
+| Cheese          | $13.50  | $18.95  |
++-----------------+---------+---------+
+| 1 topping       | $14.75  | $20.95  |
++-----------------+---------+---------+
+| 2 toppings      | $15.95  | $22.95  |
++-----------------+---------+---------+
+| 3 toppings      | $16.95  | $24.95  |
++-----------------+---------+---------+
+| Special         | $18.50  | $26.95  |
++-----------------+---------+---------+
+"""
+
+SICILIAN = """\
++------------------+---------+---------+
+| Sicilian Pizza   | Small   | Large   |
++==================+=========+=========+
+| Cheese           | $25.50  | $39.95  |
++------------------+---------+---------+
+| 1 item           | $27.50  | $41.95  |
++------------------+---------+---------+
+| 2 items          | $29.50  | $43.95  |
++------------------+---------+---------+
+| 3 items          | $31.50  | $45.95  |
++------------------+---------+---------+
+| Special          | $33.50  | $47.95  |
++------------------+---------+---------+
+"""
+
+DRINKS = """\
++---------+---------+---------+
+| Drink   | Small   | Large   |
++=========+=========+=========+
+| Soda    | $1.50   | $2.50   |
++---------+---------+---------+
+| Shake   | $3.00   | $4.25   |
++---------+---------+---------+
+"""
+
+
+@check50.check()
+def exists():
+    """pizza.py exists"""
+    check50.exists("pizza.py")
+
+
+@check50.check(exists)
+def too_few():
+    """no command-line argument exits with "Too few command-line arguments" """
+    check50.run("python3 pizza.py").stdout("Too few command-line arguments\n").exit(1)
+
+
+@check50.check(exists)
+def too_many():
+    """two command-line arguments exits with "Too many command-line arguments" """
+    check50.include("regular.csv", "sicilian.csv")
+    check50.run("python3 pizza.py regular.csv sicilian.csv").stdout("Too many command-line arguments\n").exit(1)
+
+
+@check50.check(exists)
+def not_csv():
+    """a name not ending in .csv exits with "Not a CSV file" """
+    check50.include("regular.csv")
+    check50.run("python3 pizza.py sicilian.txt").stdout("Not a CSV file\n").exit(1)
+
+
+@check50.check(exists)
+def not_csv_even_if_it_exists():
+    """an existing file not ending in .csv still exits with "Not a CSV file" """
+    check50.include("regular.csv")
+    check50.run("cp regular.csv regular.txt").exit(0)
+    check50.run("python3 pizza.py regular.txt").stdout("Not a CSV file\n").exit(1)
+
+
+@check50.check(exists)
+def missing_file():
+    """a .csv file that does not exist exits with "File does not exist" """
+    check50.run("python3 pizza.py invalid_file.csv").stdout("File does not exist\n").exit(1)
+
+
+@check50.check(exists)
+def regular():
+    """regular.csv prints the regular pizza table"""
+    check50.include("regular.csv")
+    check50.run("python3 pizza.py regular.csv").stdout(REGULAR, str_output=REGULAR).exit(0)
+
+
+@check50.check(exists)
+def sicilian():
+    """sicilian.csv prints the Sicilian pizza table"""
+    check50.include("sicilian.csv")
+    check50.run("python3 pizza.py sicilian.csv").stdout(SICILIAN, str_output=SICILIAN).exit(0)
+
+
+@check50.check(exists)
+def other_csv():
+    """any other CSV in the same shape prints a table too, not just the pizza files"""
+    check50.include("drinks.csv")
+    check50.run("python3 pizza.py drinks.csv").stdout(DRINKS, str_output=DRINKS).exit(0)
